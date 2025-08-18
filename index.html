@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Eletivas 2025.2</title>
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+  <header class="container">
+    <h1 id="form-title">Eletivas 2025.2</h1>
+    <p class="muted" id="form-help">Preencha seus dados e escolha sua Eletiva. As opções somem/desabilitam quando atingem o limite.</p>
+  </header>
+
+  <main class="container">
+    <form id="form-limit" novalidate>
+      <div id="questions"></div>
+
+      <div class="actions">
+        <button id="submitBtn" type="submit">Enviar</button>
+        <button id="refreshBtn" type="button" class="secondary">Atualizar disponibilidade</button>
+      </div>
+    </form>
+  </main>
+
+  <dialog id="modal">
+    <h3>Último passo:</h3>
+    <p>
+      Abrimos uma nova aba com um <strong>Issue</strong> pré-preenchido. Verifique e clique em
+      <em>“Submit new issue”</em> para concluir. Você precisa estar logado no GitHub.
+    </p>
+    <form method="dialog">
+      <button id="closeModal">Ok, entendi</button>
+    </form>
+  </dialog>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>

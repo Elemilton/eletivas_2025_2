@@ -1,0 +1,106 @@
+{
+  "questions": [
+    {
+      "id": "nome_completo",
+      "type": "text",
+      "label": "Questão 1 - Informe Seu Nome Completo",
+      "required": true
+    },
+    {
+      "id": "serie_turma",
+      "type": "select",
+      "label": "Questão 2 - Informe Série/Turma",
+      "required": true,
+      "options": [
+        {
+          "value": "1A",
+          "label": "1° A"
+        },
+        {
+          "value": "1B",
+          "label": "1° B"
+        },
+        {
+          "value": "1C",
+          "label": "1° C"
+        },
+        {
+          "value": "1D",
+          "label": "1° D"
+        },
+        {
+          "value": "1E",
+          "label": "1° E"
+        },
+        {
+          "value": "2A",
+          "label": "2° A"
+        },
+        {
+          "value": "2B",
+          "label": "2° B"
+        },
+        {
+          "value": "2C",
+          "label": "2° C"
+        }
+      ]
+    },
+    {
+      "id": "whatsapp",
+      "type": "text",
+      "label": "Pergunta 3 - Informe seu Contato do WhatsApp",
+      "help": "O contato será utilizado para criar os grupos da ELETIVA. Ex.: (83)99999-9999",
+      "required": true
+    },
+    {
+      "id": "eletiva",
+      "type": "radio",
+      "label": "Pergunta 4 - Escolha Sua Eletiva",
+      "help": "Cada opção possui limite máximo de 28 inscritos.",
+      "required": true,
+      "options": [
+        {
+          "value": "arte_sustentavel",
+          "label": "Arte Sustentável",
+          "limit": 28
+        },
+        {
+          "value": "artistas_historia",
+          "label": "Artistas que Marcaram a História da Arte",
+          "limit": 28
+        },
+        {
+          "value": "biq_games",
+          "label": "BiQ Games",
+          "limit": 28
+        },
+        {
+          "value": "cid_digital",
+          "label": "Cidadania Digital",
+          "limit": 28
+        },
+        {
+          "value": "danca",
+          "label": "Dança",
+          "limit": 28
+        },
+        {
+          "value": "imprensa_jornalismo",
+          "label": "Imprensa Jornalismo e Democracia",
+          "limit": 28
+        },
+        {
+          "value": "sobrevivencialismo",
+          "label": "Sobrevivencialismo: utilizando o conhecimento para sobrevivência em tempos difíceis",
+          "limit": 28
+        },
+        {
+          "value": "verde_cura",
+          "label": "Verde que Cura: descobrindo os segredos das ervas",
+          "limit": 28
+        }
+      ]
+    }
+  ]
+}

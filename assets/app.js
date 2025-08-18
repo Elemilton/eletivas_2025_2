@@ -1,0 +1,1 @@
+// JS do formulário (corrigido com coleta antes de atualizar contadores)
