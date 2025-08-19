@@ -1,10 +1,12 @@
+// assets/app.js — versão completa e corrigida
+
 function uuidv4(){return'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c){const r=Math.random()*16|0,v=c=='x'?r:(r&0x3|0x8);return v.toString(16);});}
 
 const app={config:null,questions:null,counts:{},mode:'remove',repoOwner:'',repoName:'',formEl:null,questionsEl:null,submitBtn:null,refreshBtn:null,modal:null};
 
 async function loadJSON(path){
-  const res=await fetch(`${path}?_=${Date.now()}`,{cache:'no-store'});
-  if(!res.ok) throw new Error(`Falha ao carregar ${path} (${res.status})`);
+  const res=await fetch(${path}?_=${Date.now()},{cache:'no-store'});
+  if(!res.ok) throw new Error(Falha ao carregar ${path} (${res.status}));
   return await res.json();
 }
 
@@ -38,20 +40,21 @@ async function init(){
   app.formEl.addEventListener('submit', onSubmit);
 }
 
+/* ---------- Condições (opcional) ---------- */
 function readCurrentAnswers(){
   const out={};
   for(const q of app.questions){
     if(q.type==='text'){
-      const el=document.querySelector(`input[name="${q.id}"]`);
+      const el=document.querySelector(input[name="${q.id}"]);
       if(el && el.value.trim()) out[q.id]=el.value.trim();
     }else if(q.type==='select'){
-      const el=document.querySelector(`select[name="${q.id}"]`);
+      const el=document.querySelector(select[name="${q.id}"]);
       if(el && el.value) out[q.id]=el.value;
     }else if(q.type==='radio'){
-      const el=document.querySelector(`input[name="${q.id}"]:checked`);
+      const el=document.querySelector(input[name="${q.id}"]:checked);
       if(el) out[q.id]=el.value;
     }else if(q.type==='checkbox'){
-      const els=Array.from(document.querySelectorAll(`input[name="${q.id}"]:checked`)).map(i=>i.value);
+      const els=Array.from(document.querySelectorAll(input[name="${q.id}"]:checked)).map(i=>i.value);
       if(els.length) out[q.id]=els;
     }
   }
@@ -69,10 +72,12 @@ function testCondition(cond, answers){
 function isQuestionVisible(q, answers){ return testCondition(q.visibleIf, answers); }
 function isOptionVisible(opt, answers){ return testCondition(opt.visibleIf, answers); }
 
+/* ---------- Limites ---------- */
 function getCount(qid,val){return (app.counts?.[qid]?.[val])||0;}
 function getLimit(q,val){const opt=q.options?.find(o=>o.value===val);return opt?.limit??Infinity;}
 function remaining(q,val){return Math.max(0,getLimit(q,val)-getCount(q.id,val));}
 
+/* ---------- Render ---------- */
 function renderForm(){
   app.questionsEl.innerHTML='';
   const answersSnapshot=readCurrentAnswers();
@@ -118,7 +123,7 @@ function renderForm(){
       for(const o of opts){
         if(app.mode==='remove' && !o.available) continue;
 
-        const id=`${q.id}_${o.value}`;
+        const id=${q.id}_${o.value};
         const item=document.createElement('div');
         item.className='option';
         if(!o.available) item.setAttribute('aria-disabled','true');
@@ -141,7 +146,7 @@ function renderForm(){
         const badge=document.createElement('span');
         badge.className='badge';
         badge.title='vagas restantes';
-        badge.textContent=`${o.rem} restantes`;
+        badge.textContent=${o.rem} restantes;
 
         item.appendChild(input);
         item.appendChild(label);
@@ -185,11 +190,12 @@ function renderForm(){
         const opt=document.createElement('option');
         opt.value=o.value;
         opt.disabled=!available;
-        opt.textContent=`${o.label}${available?'':' (indisponível)'}`;
+        opt.textContent=${o.label}${available?'':' (indisponível)'};
         if(prev && prev===o.value) opt.selected=true;
         select.appendChild(opt);
       }
 
+      // se mudar série/turma, re-renderiza para aplicar condicionais
       if(q.id==='serie_turma'){
         select.addEventListener('change', ()=>renderForm());
       }
@@ -202,80 +208,89 @@ function renderForm(){
   }
 }
 
+/* ---------- Atualiza contadores ---------- */
 async function refreshCounts(){
   app.counts=await loadJSON('data/counts.json').catch(()=>({}));
 }
 
+/* ---------- Coleta respostas (apenas das perguntas visíveis) ---------- */
 function collectAnswers(){
   const answers={};
-  const vis=readCurrentAnswers();
+  const vis=readCurrentAnswers(); // usa estado atual para avaliar visibilidade
 
   for(const q of app.questions){
     if(!isQuestionVisible(q, vis)) continue;
 
     if(q.type==='text'){
-      const el=document.querySelector(`input[name="${q.id}"]`);
+      const el=document.querySelector(input[name="${q.id}"]);
       const val=el?el.value.trim():'';
-      if(q.required && !val) throw new Error(`Preencha "${q.label}".`);
+      if(q.required && !val) throw new Error(Preencha "${q.label}".);
       if(val) answers[q.id]=val;
     }
     else if(q.type==='radio'){
-      const elsAll=Array.from(document.querySelectorAll(`input[name="${q.id}"]`));
+      const elsAll=Array.from(document.querySelectorAll(input[name="${q.id}"]));
       const visibleValues=(q.options||[]).filter(o=>isOptionVisible(o, vis)).map(o=>o.value);
       const checked=elsAll.find(el=>el.checked && visibleValues.includes(el.value));
       if(checked) answers[q.id]=checked.value;
-      else if(q.required) throw new Error(`Selecione uma opção em "${q.label}".`);
+      else if(q.required) throw new Error(Selecione uma opção em "${q.label}".);
     }
     else if(q.type==='checkbox'){
-      const els=Array.from(document.querySelectorAll(`input[name="${q.id}"]:checked`))
+      const els=Array.from(document.querySelectorAll(input[name="${q.id}"]:checked))
         .filter(el=>isOptionVisible((q.options||[]).find(o=>o.value===el.value), vis))
         .map(i=>i.value);
-      if(q.required && (!els || els.length===0)) throw new Error(`Escolha pelo menos uma opção em "${q.label}".`);
-      if(q.maxSelections && els.length>q.maxSelections) throw new Error(`Você só pode escolher até ${q.maxSelections} em "${q.label}".`);
+      if(q.required && (!els || els.length===0)) throw new Error(Escolha pelo menos uma opção em "${q.label}".);
+      if(q.maxSelections && els.length>q.maxSelections) throw new Error(Você só pode escolher até ${q.maxSelections} em "${q.label}".);
       answers[q.id]=els;
     }
     else if(q.type==='select'){
-      const el=document.querySelector(`select[name="${q.id}"]`);
+      const el=document.querySelector(select[name="${q.id}"]);
       if(!el) continue;
-      if(q.required && !el.value) throw new Error(`Selecione uma opção em "${q.label}".`);
+      if(q.required && !el.value) throw new Error(Selecione uma opção em "${q.label}".);
       if(el.value) answers[q.id]=el.value;
     }
   }
   return answers;
 }
 
+/* ---------- Monta Issue ---------- */
 function buildIssueURL(submission){
   const {repoOwner,repoName}=app;
-  const title=`[FORM] Submission ${submission.id}`;
-  const bodyMD=["# FORM SUBMISSION","","<!-- DO NOT EDIT BELOW -->","```json",JSON.stringify(submission),"```",""].join("\n");
-  const url=new URL(`https://github.com/${repoOwner}/${repoName}/issues/new`);
+  const title=[FORM] Submission ${submission.id};
+  const bodyMD=["# FORM SUBMISSION","","<!-- DO NOT EDIT BELOW -->","json",JSON.stringify(submission),"",""].join("\n");
+  const url=new URL(https://github.com/${repoOwner}/${repoName}/issues/new);
   url.searchParams.set('title',title);
   url.searchParams.set('body',bodyMD);
   url.searchParams.set('labels','submission');
   return url.toString();
 }
 
+/* ---------- Submit (ordem corrigida) ---------- */
 async function onSubmit(e){
   e.preventDefault();
   app.submitBtn.disabled=true;
   try{
+    // 1) Coleta primeiro (não perde o que o usuário digitou)
     const answers=collectAnswers();
+
+    // 2) Atualiza contadores e valida limites com estado mais recente
     await refreshCounts();
 
     for(const q of app.questions){
       const check=(val)=>{
         const cnt=(app.counts?.[q.id]?.[val])||0;
         const lim=q.options?.find(o=>o.value===val)?.limit ?? Infinity;
-        if(cnt+1>lim){ throw new Error(`A opção "${val}" em "${q.label}" atingiu o limite.`); }
+        if(cnt+1>lim){ throw new Error(A opção "${val}" em "${q.label}" atingiu o limite.); }
       };
       if(q.type==='checkbox'){ for(const v of answers[q.id]||[]) check(v); }
       else if(answers[q.id] && q.options){ check(answers[q.id]); }
     }
 
+    // 3) Abre o Issue com a submissão
     const submission={ id:uuidv4(), at:new Date().toISOString(), answers, client:{ ua:navigator.userAgent, lang:navigator.language } };
     const url=buildIssueURL(submission);
     window.open(url,'_blank','noopener');
 
+    // 4) Orienta no modal
     const dlg=document.getElementById('modal');
     if(typeof dlg.showModal==='function'){ dlg.showModal(); }
     else { alert('Abrimos uma nova aba com o Issue. Clique em "Submit new issue" no GitHub para concluir.'); }
