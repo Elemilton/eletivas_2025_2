@@ -1,1 +1,21 @@
-body{font-family:sans-serif;margin:2rem;}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; color: #111; background: #fafafa;}
+.container { max-width: 860px; margin: 0 auto; padding: 1rem; }
+h1 { font-size: 1.6rem; margin: 1rem 0 0.25rem; }
+.muted { color: #6b7280; }
+.tiny { font-size: 0.85rem; }
+form { background: white; border-radius: 14px; padding: 1.25rem; box-shadow: 0 8px 30px rgba(0,0,0,0.06); }
+.question { padding: 1rem 0; border-bottom: 1px solid #eee; }
+.question:last-child { border-bottom: none; }
+.question h3 { margin: 0 0 0.25rem; font-size: 1.05rem; }
+.question .help { margin: 0.25rem 0 0.5rem; color: #6b7280; font-size: 0.9rem; }
+.options { display: grid; gap: 0.5rem; }
+.option { display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 0.7rem; border: 1px solid #e5e7eb; border-radius: 10px; background: #fff; }
+.option[aria-disabled="true"] { opacity: 0.5; }
+.option label { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; width: 100%; }
+.badge { margin-left: auto; font-size: 0.78rem; background: #f3f4f6; padding: 0.15rem 0.45rem; border-radius: 999px; color: #374151; }
+.select-wrap select, .text-wrap input { width: 100%; padding: 0.6rem; border-radius: 10px; border: 1px solid #e5e7eb; }
+.actions { display: flex; gap: 0.75rem; margin-top: 1rem; }
+button { border: 0; border-radius: 999px; padding: 0.75rem 1.1rem; background: #111827; color: white; font-weight: 600; cursor: pointer; }
+button.secondary { background: #6b7280; }
+button:disabled { opacity: 0.5; cursor: not-allowed; }

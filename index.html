@@ -11,29 +11,28 @@
     <h1 id="form-title">Eletivas 2025.2</h1>
     <p class="muted" id="form-help">Preencha seus dados e escolha sua Eletiva. As opções somem/desabilitam quando atingem o limite.</p>
   </header>
-
   <main class="container">
     <form id="form-limit" novalidate>
       <div id="questions"></div>
-
       <div class="actions">
         <button id="submitBtn" type="submit">Enviar</button>
         <button id="refreshBtn" type="button" class="secondary">Atualizar disponibilidade</button>
       </div>
+      <p class="tiny muted">
+        * Este formulário usa apenas GitHub (Pages + Issues + Actions). Ao enviar, você será direcionado
+        para criar um <strong>Issue</strong> com suas respostas. Após confirmar o Issue, sua resposta é
+        processada automaticamente e gravada no repositório.
+      </p>
     </form>
   </main>
-
   <dialog id="modal">
     <h3>Último passo:</h3>
     <p>
       Abrimos uma nova aba com um <strong>Issue</strong> pré-preenchido. Verifique e clique em
       <em>“Submit new issue”</em> para concluir. Você precisa estar logado no GitHub.
     </p>
-    <form method="dialog">
-      <button id="closeModal">Ok, entendi</button>
-    </form>
+    <form method="dialog"><button id="closeModal">Ok, entendi</button></form>
   </dialog>
-
   <script src="assets/app.js"></script>
 </body>
 </html>

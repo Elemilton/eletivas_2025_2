@@ -1,0 +1,1 @@
+Publicação: ative Pages (Deploy from branch: main /root) e Actions (Read & write).

@@ -4,12 +4,14 @@
       "id": "nome_completo",
       "type": "text",
       "label": "Questão 1 - Informe Seu Nome Completo",
+      "help": null,
       "required": true
     },
     {
       "id": "serie_turma",
       "type": "select",
       "label": "Questão 2 - Informe Série/Turma",
+      "help": null,
       "required": true,
       "options": [
         {
@@ -50,7 +52,7 @@
       "id": "whatsapp",
       "type": "text",
       "label": "Pergunta 3 - Informe seu Contato do WhatsApp",
-      "help": "O contato será utilizado para criar os grupos da ELETIVA. Ex.: (83)99999-9999",
+      "help": "O contato será utilizado para criar os grupos da ELETIVA. Não esqueça de colocar o DDD. Ex.: (83)99999-9999",
       "required": true
     },
     {
